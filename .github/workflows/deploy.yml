@@ -27,6 +27,5 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          scp -r * ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }}:/var/www/html
+          sudo scp -r * ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }}:/var/www/html
           ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo systemctl restart apache2'
-
