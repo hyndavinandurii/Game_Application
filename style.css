@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #c39dd5; /* Light blue background color */
+    color: #cb7171; /* Default text color */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game-container {
+    background-color: #a6dae4; /* White background color for game container */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+}
+
+.game-title {
+    color: #d42525; /* Tomato red color for game title */
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.choices {
+    margin: 20px;
+}
+
+.choice {
+    font-size: 34px;
+    padding: 25px 30px;
+    margin: 20px;
+    cursor: pointer;
+    background-color: #798168; /* Light sky blue background color */
+    border: none;
+    border-radius: 5px;
+    color: rgb(101, 222, 222);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.choice:hover {
+    background-color: #4b4dd3; /* Steel blue background color on hover */
+    transform: scale(1.1);
+}
+
+.game-result {
+    margin: 20px;
+    font-size: 34px;
+    font-weight: bold;
+    color: #c5208b; /* Dark gray text color */
+    background-color: #80cbd2; /* Light blue background color for result */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.game-result.win {
+    color: #76c476; /* Lime green color for win result */
+}
+
+.game-result.loss {
+    color: #b83c1a; /* Tomato red color for loss result */
+}
+
+.play-again {
+    font-size: 22px;
+    padding: 10px 20px;
+    display: none;
+    background-color: #bbca81; /* Lime green background color */
+    border: none;
+    border-radius: 5px;
+    color: rgb(105, 79, 198);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.play-again:hover {
+    background-color: #1be56c; /* Forest green background color on hover */
+    transform: scale(1.1);
+}
