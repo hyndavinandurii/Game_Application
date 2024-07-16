@@ -3,11 +3,11 @@ name: Deploy to AWS EC2
 on:
   push:
     branches:
-      - main  # Adjust branch name as needed
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -20,8 +20,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_INSTANCE_IP }} >> ~/.ssh/known_hosts
 
+      - name: Install Apache on EC2
+        run: |
+          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo apt update'
+          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo apt install -y apache2'
+
       - name: Deploy via SSH
         run: |
-          scp -r * ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }}:/home/ubuntu
+          scp -r * ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }}:/var/www/html
           ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo systemctl restart apache2'
 
