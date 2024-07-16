@@ -22,10 +22,10 @@ jobs:
 
       - name: Install Apache on EC2
         run: |
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo apt update'
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo apt install -y apache2'
+          ssh ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo apt update'
+          ssh ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo apt install -y apache2'
 
       - name: Deploy via SSH
         run: |
-          sudo scp -r * ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }}:/var/www/html
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo systemctl restart apache2'
+          sudo scp -r * ${EC2_USERNAME}@${EC2_INSTANCE_IP}:/var/www/html
+          ssh ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo systemctl restart apache2'
