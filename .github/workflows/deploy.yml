@@ -13,18 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install SSH key
+      - name: Install SSH key and update known hosts
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_INSTANCE_IP }} >> ~/.ssh/known_hosts
 
       - name: Install Apache on EC2
         run: |
-          ssh -v ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo apt update'
-          ssh -v ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo apt install -y apache2'
+          ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo apt update'
+          ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo apt install -y apache2'
 
       - name: Deploy via SSH
         run: |
           sudo scp -r * ${EC2_USERNAME}@${EC2_INSTANCE_IP}:/var/www/html
-          ssh -v ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo systemctl restart apache2'
+          ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo systemctl restart apache2'
