@@ -27,5 +27,5 @@ jobs:
 
       - name: Deploy via rsync
         run: |
-          rsync -avz --exclude '.git' --exclude '.github' * ${EC2_USERNAME}@${EC2_INSTANCE_IP}:/var/www/html/
+          sudo rsync -avz --exclude '.git' --exclude '.github' * ${EC2_USERNAME}@${EC2_INSTANCE_IP}:/var/www/html/
           ssh ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo systemctl restart apache2'
