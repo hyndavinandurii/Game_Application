@@ -22,10 +22,10 @@ jobs:
 
       - name: Set correct permissions
         run: |
-          ssh ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo chmod -R 755 /var/www/html'
-          ssh ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo chown -R ${EC2_USERNAME}:${EC2_USERNAME} /var/www/html'
+          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo chmod -R 755 /var/www/html'
+          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo chown -R www-data:www-data /var/www/html'
 
       - name: Deploy via rsync
         run: |
-          sudo rsync -avz --exclude '.git' --exclude '.github' * ${EC2_USERNAME}@${EC2_INSTANCE_IP}:/var/www/html/
-          ssh ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo systemctl restart apache2'
+          rsync -avz --exclude '.git' --exclude '.github' * ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }}:/var/www/html/
+          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo systemctl restart apache2'
