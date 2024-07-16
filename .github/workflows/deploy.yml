@@ -28,7 +28,7 @@ jobs:
       - name: Grant permissions on EC2
         run: |
           ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo chown -R www-data:www-data /var/www/html'
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo usermod -aG www-data ${{ secrets.EC2_USERNAME }}'
+          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo chmod -R 755 /var/www/html'
 
       - name: Deploy via SSH
         run: |
