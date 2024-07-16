@@ -22,10 +22,12 @@ jobs:
 
       - name: Set correct permissions
         run: |
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo chmod -R 755 /var/www/html'
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo chown -R www-data:www-data /var/www/html'
+          ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo chmod -R 755 /var/www/html'
+          ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo chown -R www-data:www-data /var/www/html'
 
       - name: Deploy via SSH
         run: |
-          scp -r * ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }}:/var/www/html
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_INSTANCE_IP }} 'sudo systemctl restart apache2'
+          scp -o StrictHostKeyChecking=no -r * ${EC2_USERNAME}@${EC2_INSTANCE_IP}:/var/www/html
+          ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo systemctl restart apache2'
+      - name: Debug SSH connection
+        run: ssh -v ${EC2_USERNAME}@${EC2_INSTANCE_IP} 'sudo apt update'
